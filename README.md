@@ -23,7 +23,7 @@
 
 ### 支持 GraalVM 原生镜像
 
-参考springboot3GraalVM项目
+参考[springboot3GraalVM](https://github.com/glimjoe/springboot3GraalVM)项目
 
 ### log4j2扩展支持
 * 按照spring的文档，下面的内容仅适用于log4j2，但理论上也支持logback，我的例子只依照官方文档来写，感兴趣的可以试试logback
