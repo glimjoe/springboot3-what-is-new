@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: springboot3
+  kafka:
+    bootstrapServers:
+      - 10.10.92.43:9092
+    clientId: springboot3client
+    consumer:
+      group-id: springboot3client-group
+      max-poll-records: 10
+      #Kafka中没有初始偏移或如果当前偏移在服务器上不再存在时,默认区最新 ，有三个选项 【latest, earliest, none】
+      auto-offset-reset: earliest
+      #是否开启自动提交
+      enable-auto-commit: false
+      #自动提交的时间间隔
+      auto-commit-interval: 1000
+      topic: quichstart-event
+    producer:
+      acks: 1
+      batch-size: 4096
+      buffer-memory: 40960000
+      client-id: dc-device-flow-analyze-producer
+      compression-type: zstd
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      retries: 3
+      properties:
+        spring.json.add.type.headers: false
+        max.request.size: 126951500
+    retry:
+      topic:
+        enable: true
+        attempts: 5
+        multiplier: 2
+        maxDelay: 3s
+    listener:
+      async-acks: true
+      ack-mode: MANUAL_IMMEDIATE
+      concurrency: 1  #推荐设置为topic的分区数
+      type: BATCH #开启批量监听
+  elasticsearch:
+    uris:
+      - http://10.10.92.43:9200
+    username: elastic
+    password: ZGJ0C6tegxF3SluL4R=X
+#    pathPrefix: springboot3
+# micrometer配置
+management:
+  zipkin:
+    tracing:
+      endpoint: http://10.10.92.43:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0 #采样率默认为0.1(0.1就是10次只能有一次被记录下来)，值越大收集越及时。
+  server:
+    port: 9999
+  endpoint:
+    health:
+      group:
+        custom:
+          include: diskSpace,ping,health1,health2,health3
+          show-components: always
+          show-details: always
+      validate-group-membership: false
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+a:
+  b: ccccc
