@@ -1,3 +1,5 @@
+## 如何运行
+直接运行Springboot3Application中的main方法，如果需要日志，请添加JVM参数-Dspring.profiles.active=${env}，pom.xml中指定profiles无效，环境参考[log4j2-spring](src/main/resources/log4j2-spring.xml)
 ## springboot3新特性
 ### jdk最低版本提升到17
 
